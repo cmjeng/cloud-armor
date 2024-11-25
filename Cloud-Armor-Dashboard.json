@@ -1,0 +1,1510 @@
+{
+  "displayName": "Cloud-Armor Dashboard",
+  "mosaicLayout": {
+    "columns": 48,
+    "tiles": [
+      {
+        "xPos": 1,
+        "yPos": 47,
+        "width": 23,
+        "height": 14,
+        "widget": {
+          "xyChart": {
+            "dataSets": [
+              {
+                "timeSeriesQuery": {
+                  "timeSeriesFilter": {
+                    "filter": "metric.type=\"logging.googleapis.com/user/cloud_armor_feed\" resource.type=\"l7_lb_rule\" metric.label.\"denied_by_cloud_armor\"=\"DENY\"",
+                    "aggregation": {
+                      "alignmentPeriod": "60s",
+                      "perSeriesAligner": "ALIGN_RATE",
+                      "crossSeriesReducer": "REDUCE_SUM",
+                      "groupByFields": [
+                        "resource.label.\"target_proxy_name\""
+                      ]
+                    }
+                  },
+                  "unitOverride": "",
+                  "outputFullDuration": false
+                },
+                "plotType": "LINE",
+                "legendTemplate": "",
+                "minAlignmentPeriod": "60s",
+                "targetAxis": "Y1",
+                "dimensions": [],
+                "measures": [],
+                "breakdowns": []
+              },
+              {
+                "timeSeriesQuery": {
+                  "timeSeriesFilter": {
+                    "filter": "metric.type=\"logging.googleapis.com/user/cloud_armor_feed\" resource.type=\"l7_lb_rule\" metric.label.\"denied_by_cloud_armor\"=\"RATE_BASED_BAN\"",
+                    "aggregation": {
+                      "alignmentPeriod": "60s",
+                      "perSeriesAligner": "ALIGN_RATE",
+                      "crossSeriesReducer": "REDUCE_SUM",
+                      "groupByFields": [
+                        "resource.label.\"target_proxy_name\""
+                      ]
+                    }
+                  },
+                  "unitOverride": "",
+                  "outputFullDuration": false
+                },
+                "plotType": "LINE",
+                "legendTemplate": "",
+                "minAlignmentPeriod": "60s",
+                "targetAxis": "Y1",
+                "dimensions": [],
+                "measures": [],
+                "breakdowns": []
+              }
+            ],
+            "thresholds": [],
+            "yAxis": {
+              "label": "",
+              "scale": "LINEAR"
+            },
+            "chartOptions": {
+              "mode": "COLOR",
+              "showLegend": false,
+              "displayHorizontal": false
+            }
+          },
+          "title": "Blocked Load Balancer Request per Second",
+          "id": ""
+        }
+      },
+      {
+        "xPos": 24,
+        "yPos": 20,
+        "width": 23,
+        "height": 13,
+        "widget": {
+          "xyChart": {
+            "dataSets": [
+              {
+                "timeSeriesQuery": {
+                  "timeSeriesFilter": {
+                    "filter": "metric.type=\"networksecurity.googleapis.com/https/request_count\" resource.type=\"network_security_policy\" metric.label.\"blocked\"=\"false\"",
+                    "aggregation": {
+                      "alignmentPeriod": "60s",
+                      "perSeriesAligner": "ALIGN_SUM",
+                      "groupByFields": []
+                    }
+                  },
+                  "unitOverride": "",
+                  "outputFullDuration": false
+                },
+                "plotType": "LINE",
+                "legendTemplate": "",
+                "minAlignmentPeriod": "60s",
+                "targetAxis": "Y1",
+                "dimensions": [],
+                "measures": [],
+                "breakdowns": []
+              }
+            ],
+            "thresholds": [],
+            "yAxis": {
+              "label": "",
+              "scale": "LINEAR"
+            },
+            "chartOptions": {
+              "mode": "COLOR",
+              "showLegend": false,
+              "displayHorizontal": false
+            }
+          },
+          "title": "Layer 3/4 Requests Allowed by Backend",
+          "id": ""
+        }
+      },
+      {
+        "xPos": 1,
+        "yPos": 20,
+        "width": 23,
+        "height": 13,
+        "widget": {
+          "xyChart": {
+            "dataSets": [
+              {
+                "timeSeriesQuery": {
+                  "timeSeriesFilter": {
+                    "filter": "metric.type=\"networksecurity.googleapis.com/https/request_count\" resource.type=\"network_security_policy\" metric.label.\"blocked\"=\"true\"",
+                    "aggregation": {
+                      "alignmentPeriod": "60s",
+                      "perSeriesAligner": "ALIGN_SUM",
+                      "groupByFields": []
+                    }
+                  },
+                  "unitOverride": "",
+                  "outputFullDuration": false
+                },
+                "plotType": "LINE",
+                "legendTemplate": "",
+                "minAlignmentPeriod": "60s",
+                "targetAxis": "Y1",
+                "dimensions": [],
+                "measures": [],
+                "breakdowns": []
+              }
+            ],
+            "thresholds": [],
+            "yAxis": {
+              "label": "Request count",
+              "scale": "LINEAR"
+            },
+            "chartOptions": {
+              "mode": "COLOR",
+              "showLegend": false,
+              "displayHorizontal": false
+            }
+          },
+          "title": "Layer 3/4 Blocked Requests by Backend",
+          "id": ""
+        }
+      },
+      {
+        "yPos": 20,
+        "width": 48,
+        "height": 56,
+        "widget": {
+          "title": "Cloud Armor Policies",
+          "collapsibleGroup": {
+            "collapsed": false
+          },
+          "id": ""
+        }
+      },
+      {
+        "xPos": 1,
+        "yPos": 61,
+        "width": 47,
+        "height": 15,
+        "widget": {
+          "timeSeriesTable": {
+            "dataSets": [
+              {
+                "timeSeriesQuery": {
+                  "prometheusQuery": "topk(100, count by (CloudArmorRuleTriggered)(count_over_time(logging_googleapis_com:user_cloud_armor_feed[${__interval}])))\n#This query may not fully reflect the original configuration.",
+                  "unitOverride": "",
+                  "outputFullDuration": true
+                },
+                "tableTemplate": "",
+                "minAlignmentPeriod": "0s"
+              }
+            ],
+            "metricVisualization": "BAR",
+            "opsAnalyticsSettings": {
+              "maxRows": "0",
+              "showFilterBar": false,
+              "pageSize": "0"
+            },
+            "displayColumnType": false
+          },
+          "title": "Top Cloud Armor Rules Aggregated by Day",
+          "id": ""
+        }
+      },
+      {
+        "xPos": 24,
+        "yPos": 76,
+        "width": 24,
+        "height": 16,
+        "widget": {
+          "xyChart": {
+            "dataSets": [
+              {
+                "timeSeriesQuery": {
+                  "timeSeriesFilter": {
+                    "filter": "metric.type=\"loadbalancing.googleapis.com/https/response_bytes_count\" resource.type=\"https_lb_rule\"",
+                    "aggregation": {
+                      "alignmentPeriod": "3600s",
+                      "perSeriesAligner": "ALIGN_SUM",
+                      "crossSeriesReducer": "REDUCE_SUM",
+                      "groupByFields": [
+                        "metric.label.\"client_country\""
+                      ]
+                    }
+                  },
+                  "unitOverride": "",
+                  "outputFullDuration": false
+                },
+                "plotType": "STACKED_AREA",
+                "legendTemplate": "",
+                "minAlignmentPeriod": "3600s",
+                "targetAxis": "Y1",
+                "dimensions": [],
+                "measures": [],
+                "breakdowns": []
+              }
+            ],
+            "timeshiftDuration": "0s",
+            "thresholds": [],
+            "yAxis": {
+              "label": "",
+              "scale": "LINEAR"
+            },
+            "chartOptions": {
+              "mode": "COLOR",
+              "showLegend": false,
+              "displayHorizontal": false
+            }
+          },
+          "title": "Traffic by Country by Hour",
+          "id": ""
+        }
+      },
+      {
+        "xPos": 1,
+        "yPos": 76,
+        "width": 23,
+        "height": 16,
+        "widget": {
+          "timeSeriesTable": {
+            "dataSets": [
+              {
+                "timeSeriesQuery": {
+                  "timeSeriesFilter": {
+                    "filter": "metric.type=\"loadbalancing.googleapis.com/https/request_count\" resource.type=\"https_lb_rule\"",
+                    "aggregation": {
+                      "alignmentPeriod": "3600s",
+                      "perSeriesAligner": "ALIGN_SUM",
+                      "crossSeriesReducer": "REDUCE_SUM",
+                      "groupByFields": [
+                        "metric.label.\"client_country\""
+                      ]
+                    },
+                    "pickTimeSeriesFilter": {
+                      "rankingMethod": "METHOD_MEAN",
+                      "numTimeSeries": 100,
+                      "direction": "TOP"
+                    }
+                  },
+                  "unitOverride": "",
+                  "outputFullDuration": false
+                },
+                "tableTemplate": "",
+                "minAlignmentPeriod": "3600s"
+              }
+            ],
+            "metricVisualization": "BAR",
+            "columnSettings": [
+              {
+                "column": "value",
+                "visible": false
+              }
+            ],
+            "opsAnalyticsSettings": {
+              "maxRows": "0",
+              "showFilterBar": false,
+              "pageSize": "0"
+            },
+            "displayColumnType": false
+          },
+          "title": "Requests by Country",
+          "id": ""
+        }
+      },
+      {
+        "yPos": 76,
+        "width": 48,
+        "height": 63,
+        "widget": {
+          "title": "Ingress Patterns",
+          "collapsibleGroup": {
+            "collapsed": false
+          },
+          "id": ""
+        }
+      },
+      {
+        "xPos": 24,
+        "yPos": 47,
+        "width": 23,
+        "height": 14,
+        "widget": {
+          "xyChart": {
+            "dataSets": [
+              {
+                "timeSeriesQuery": {
+                  "timeSeriesFilter": {
+                    "filter": "metric.type=\"logging.googleapis.com/user/cloud_armor_feed\" resource.type=\"l7_lb_rule\" metric.label.\"denied_by_cloud_armor\"!=\"DENY\" metric.label.\"denied_by_cloud_armor\"!=\"RATE_BASED_BAN\"",
+                    "aggregation": {
+                      "alignmentPeriod": "60s",
+                      "perSeriesAligner": "ALIGN_RATE",
+                      "crossSeriesReducer": "REDUCE_SUM",
+                      "groupByFields": [
+                        "resource.label.\"target_proxy_name\""
+                      ]
+                    }
+                  },
+                  "unitOverride": "",
+                  "outputFullDuration": false
+                },
+                "plotType": "LINE",
+                "legendTemplate": "",
+                "minAlignmentPeriod": "60s",
+                "targetAxis": "Y1",
+                "dimensions": [],
+                "measures": [],
+                "breakdowns": []
+              }
+            ],
+            "thresholds": [],
+            "yAxis": {
+              "label": "",
+              "scale": "LINEAR"
+            },
+            "chartOptions": {
+              "mode": "COLOR",
+              "showLegend": false,
+              "displayHorizontal": false
+            }
+          },
+          "title": "Allowed Load Balancer Requests per Second",
+          "id": ""
+        }
+      },
+      {
+        "xPos": 24,
+        "yPos": 92,
+        "width": 24,
+        "height": 16,
+        "widget": {
+          "timeSeriesTable": {
+            "dataSets": [
+              {
+                "timeSeriesQuery": {
+                  "prometheusQuery": "topk(50, sum by (referer)(count_over_time(logging_googleapis_com:user_cloud_armor_feed[${__interval}])))\n#This query may not fully reflect the original configuration.",
+                  "unitOverride": "",
+                  "outputFullDuration": false
+                },
+                "tableTemplate": "",
+                "minAlignmentPeriod": "0s"
+              }
+            ],
+            "metricVisualization": "BAR",
+            "columnSettings": [
+              {
+                "column": "referer",
+                "visible": true
+              },
+              {
+                "column": "value",
+                "visible": true
+              }
+            ],
+            "opsAnalyticsSettings": {
+              "maxRows": "0",
+              "showFilterBar": false,
+              "pageSize": "0"
+            },
+            "displayColumnType": false
+          },
+          "title": "Top Referer",
+          "id": ""
+        }
+      },
+      {
+        "xPos": 24,
+        "yPos": 108,
+        "width": 24,
+        "height": 14,
+        "widget": {
+          "timeSeriesTable": {
+            "dataSets": [
+              {
+                "timeSeriesQuery": {
+                  "prometheusQuery": "topk(300, count by (client_ip)(sum_over_time(logging_googleapis_com:user_cloud_armor_feed[${__interval}])))\n#This query may not fully reflect the original configuration.",
+                  "unitOverride": "",
+                  "outputFullDuration": false
+                },
+                "tableTemplate": "",
+                "minAlignmentPeriod": "0s"
+              }
+            ],
+            "metricVisualization": "BAR",
+            "columnSettings": [
+              {
+                "column": "value",
+                "visible": false
+              }
+            ],
+            "opsAnalyticsSettings": {
+              "maxRows": "0",
+              "showFilterBar": false,
+              "pageSize": "0"
+            },
+            "displayColumnType": false
+          },
+          "title": "Top IP Addresses by Day",
+          "id": ""
+        }
+      },
+      {
+        "xPos": 1,
+        "yPos": 92,
+        "width": 23,
+        "height": 16,
+        "widget": {
+          "timeSeriesTable": {
+            "dataSets": [
+              {
+                "timeSeriesQuery": {
+                  "prometheusQuery": "topk(50, count by (user_agent)(count_over_time(logging_googleapis_com:user_cloud_armor_feed[${__interval}])))\n#This query may not fully reflect the original configuration.",
+                  "unitOverride": "",
+                  "outputFullDuration": false
+                },
+                "tableTemplate": "",
+                "minAlignmentPeriod": "0s"
+              }
+            ],
+            "metricVisualization": "BAR",
+            "columnSettings": [
+              {
+                "column": "user_agent",
+                "visible": true
+              },
+              {
+                "column": "value",
+                "visible": true
+              }
+            ],
+            "opsAnalyticsSettings": {
+              "maxRows": "0",
+              "showFilterBar": false,
+              "pageSize": "0"
+            },
+            "displayColumnType": false
+          },
+          "title": "Top User Agent",
+          "id": ""
+        }
+      },
+      {
+        "xPos": 1,
+        "yPos": 108,
+        "width": 23,
+        "height": 14,
+        "widget": {
+          "xyChart": {
+            "dataSets": [
+              {
+                "timeSeriesQuery": {
+                  "timeSeriesFilter": {
+                    "filter": "metric.type=\"loadbalancing.googleapis.com/https/request_count\" resource.type=\"https_lb_rule\"",
+                    "aggregation": {
+                      "alignmentPeriod": "60s",
+                      "perSeriesAligner": "ALIGN_RATE",
+                      "crossSeriesReducer": "REDUCE_SUM",
+                      "groupByFields": [
+                        "metric.label.\"response_code_class\""
+                      ]
+                    }
+                  },
+                  "unitOverride": "",
+                  "outputFullDuration": false
+                },
+                "plotType": "STACKED_AREA",
+                "legendTemplate": "",
+                "minAlignmentPeriod": "60s",
+                "targetAxis": "Y1",
+                "dimensions": [],
+                "measures": [],
+                "breakdowns": []
+              }
+            ],
+            "thresholds": [],
+            "yAxis": {
+              "label": "",
+              "scale": "LINEAR"
+            },
+            "chartOptions": {
+              "mode": "COLOR",
+              "showLegend": false,
+              "displayHorizontal": false
+            }
+          },
+          "title": "Status Codes",
+          "id": ""
+        }
+      },
+      {
+        "xPos": 1,
+        "yPos": 122,
+        "width": 38,
+        "height": 17,
+        "widget": {
+          "timeSeriesTable": {
+            "dataSets": [
+              {
+                "timeSeriesQuery": {
+                  "timeSeriesFilter": {
+                    "filter": "metric.type=\"logging.googleapis.com/user/cloud_armor_feed\"",
+                    "aggregation": {
+                      "alignmentPeriod": "3600s",
+                      "perSeriesAligner": "ALIGN_COUNT",
+                      "crossSeriesReducer": "REDUCE_SUM",
+                      "groupByFields": [
+                        "metric.label.\"URL\"",
+                        "metric.label.\"referer\"",
+                        "metric.label.\"client_ip\"",
+                        "metric.label.\"CloudArmorRuleTriggered\"",
+                        "metric.label.\"request_method\"",
+                        "metric.label.\"user_agent\"",
+                        "metric.label.\"denied_by_cloud_armor\"",
+                        "metric.label.\"deny_reason\""
+                      ]
+                    }
+                  },
+                  "unitOverride": "",
+                  "outputFullDuration": true
+                },
+                "tableTemplate": "",
+                "minAlignmentPeriod": "3600s"
+              }
+            ],
+            "metricVisualization": "NUMBER",
+            "columnSettings": [
+              {
+                "column": "value",
+                "visible": false
+              }
+            ],
+            "opsAnalyticsSettings": {
+              "maxRows": "0",
+              "showFilterBar": false,
+              "pageSize": "0"
+            },
+            "displayColumnType": false
+          },
+          "title": "URL Request Details (aggregate by hour)",
+          "id": ""
+        }
+      },
+      {
+        "yPos": 8,
+        "width": 47,
+        "height": 12,
+        "widget": {
+          "incidentList": {
+            "monitoredResources": [],
+            "policyNames": [
+              "alertPolicies/8102329469754320830"
+            ]
+          },
+          "title": "Cloud Armor Incidents",
+          "id": ""
+        }
+      },
+      {
+        "xPos": 1,
+        "width": 15,
+        "height": 8,
+        "widget": {
+          "scorecard": {
+            "timeSeriesQuery": {
+              "timeSeriesFilter": {
+                "filter": "metric.type=\"logging.googleapis.com/user/cloud_armor_feed\" metric.label.\"outcome\"=\"ACCEPT\"",
+                "aggregation": {
+                  "alignmentPeriod": "60s",
+                  "perSeriesAligner": "ALIGN_SUM",
+                  "crossSeriesReducer": "REDUCE_SUM",
+                  "groupByFields": []
+                }
+              },
+              "unitOverride": "",
+              "outputFullDuration": true
+            },
+            "sparkChartView": {
+              "sparkChartType": "SPARK_LINE"
+            },
+            "thresholds": [],
+            "dimensions": [],
+            "measures": []
+          },
+          "title": "Cloud Armor - Allowed Requests",
+          "id": ""
+        }
+      },
+      {
+        "xPos": 17,
+        "width": 15,
+        "height": 8,
+        "widget": {
+          "scorecard": {
+            "timeSeriesQuery": {
+              "timeSeriesFilter": {
+                "filter": "metric.type=\"logging.googleapis.com/user/cloud_armor_feed\" metric.label.\"outcome\"=\"DENY\"",
+                "aggregation": {
+                  "alignmentPeriod": "60s",
+                  "perSeriesAligner": "ALIGN_SUM",
+                  "crossSeriesReducer": "REDUCE_SUM",
+                  "groupByFields": []
+                }
+              },
+              "unitOverride": "",
+              "outputFullDuration": true
+            },
+            "sparkChartView": {
+              "sparkChartType": "SPARK_LINE"
+            },
+            "thresholds": [],
+            "dimensions": [],
+            "measures": []
+          },
+          "title": "Cloud Armor - Denied Requests",
+          "id": ""
+        }
+      },
+      {
+        "xPos": 32,
+        "width": 16,
+        "height": 8,
+        "widget": {
+          "scorecard": {
+            "timeSeriesQuery": {
+              "timeSeriesFilter": {
+                "filter": "metric.type=\"logging.googleapis.com/user/cloud_armor_feed\" metric.label.\"denied_by_cloud_armor\"=\"RATE_BASED_BAN\" metric.label.\"outcome\"=\"DENY\"",
+                "aggregation": {
+                  "alignmentPeriod": "60s",
+                  "perSeriesAligner": "ALIGN_SUM",
+                  "crossSeriesReducer": "REDUCE_SUM",
+                  "groupByFields": []
+                }
+              },
+              "unitOverride": "",
+              "outputFullDuration": true
+            },
+            "sparkChartView": {
+              "sparkChartType": "SPARK_LINE"
+            },
+            "thresholds": [],
+            "dimensions": [],
+            "measures": []
+          },
+          "title": "Cloud Armor - Rate Limit Denied Requests",
+          "id": ""
+        }
+      },
+      {
+        "width": 48,
+        "height": 8,
+        "widget": {
+          "title": "Cloud Armor - At a Glance",
+          "collapsibleGroup": {
+            "collapsed": false
+          },
+          "id": ""
+        }
+      },
+      {
+        "xPos": 1,
+        "yPos": 33,
+        "width": 23,
+        "height": 14,
+        "widget": {
+          "xyChart": {
+            "dataSets": [
+              {
+                "timeSeriesQuery": {
+                  "timeSeriesFilter": {
+                    "filter": "metric.type=\"logging.googleapis.com/user/cloud_armor_feed\" resource.type=\"l7_lb_rule\" metric.label.\"denied_by_cloud_armor\"=\"DENY\"",
+                    "aggregation": {
+                      "alignmentPeriod": "60s",
+                      "perSeriesAligner": "ALIGN_SUM",
+                      "crossSeriesReducer": "REDUCE_SUM",
+                      "groupByFields": [
+                        "resource.label.\"target_proxy_name\""
+                      ]
+                    }
+                  },
+                  "unitOverride": "",
+                  "outputFullDuration": false
+                },
+                "plotType": "LINE",
+                "legendTemplate": "",
+                "minAlignmentPeriod": "60s",
+                "targetAxis": "Y1",
+                "dimensions": [],
+                "measures": [],
+                "breakdowns": []
+              },
+              {
+                "timeSeriesQuery": {
+                  "timeSeriesFilter": {
+                    "filter": "metric.type=\"logging.googleapis.com/user/cloud_armor_feed\" resource.type=\"l7_lb_rule\" metric.label.\"denied_by_cloud_armor\"=\"RATE_BASED_BAN\"",
+                    "aggregation": {
+                      "alignmentPeriod": "60s",
+                      "perSeriesAligner": "ALIGN_SUM",
+                      "crossSeriesReducer": "REDUCE_SUM",
+                      "groupByFields": []
+                    }
+                  },
+                  "unitOverride": "",
+                  "outputFullDuration": false
+                },
+                "plotType": "LINE",
+                "legendTemplate": "",
+                "minAlignmentPeriod": "60s",
+                "targetAxis": "Y1",
+                "dimensions": [],
+                "measures": [],
+                "breakdowns": []
+              }
+            ],
+            "thresholds": [],
+            "yAxis": {
+              "label": "",
+              "scale": "LINEAR"
+            },
+            "chartOptions": {
+              "mode": "COLOR",
+              "showLegend": false,
+              "displayHorizontal": false
+            }
+          },
+          "title": "Blocked Load Balancer Requests",
+          "id": ""
+        }
+      },
+      {
+        "xPos": 24,
+        "yPos": 33,
+        "width": 23,
+        "height": 14,
+        "widget": {
+          "xyChart": {
+            "dataSets": [
+              {
+                "timeSeriesQuery": {
+                  "timeSeriesFilter": {
+                    "filter": "metric.type=\"logging.googleapis.com/user/cloud_armor_feed\" resource.type=\"l7_lb_rule\" metric.label.\"denied_by_cloud_armor\"!=\"DENY\" metric.label.\"denied_by_cloud_armor\"!=\"RATE_BASED_BAN\"",
+                    "aggregation": {
+                      "alignmentPeriod": "60s",
+                      "perSeriesAligner": "ALIGN_SUM",
+                      "crossSeriesReducer": "REDUCE_SUM",
+                      "groupByFields": [
+                        "resource.label.\"target_proxy_name\""
+                      ]
+                    }
+                  },
+                  "unitOverride": "",
+                  "outputFullDuration": false
+                },
+                "plotType": "LINE",
+                "legendTemplate": "",
+                "minAlignmentPeriod": "60s",
+                "targetAxis": "Y1",
+                "dimensions": [],
+                "measures": [],
+                "breakdowns": []
+              }
+            ],
+            "thresholds": [],
+            "yAxis": {
+              "label": "",
+              "scale": "LINEAR"
+            },
+            "chartOptions": {
+              "mode": "COLOR",
+              "showLegend": false,
+              "displayHorizontal": false
+            }
+          },
+          "title": "Allowed Load Balancer Requests",
+          "id": ""
+        }
+      },
+      {
+        "yPos": 139,
+        "width": 24,
+        "height": 16,
+        "widget": {
+          "timeSeriesTable": {
+            "dataSets": [
+              {
+                "timeSeriesQuery": {
+                  "timeSeriesFilter": {
+                    "filter": "metric.type=\"logging.googleapis.com/user/adaptive_protection\"",
+                    "aggregation": {
+                      "alignmentPeriod": "60s",
+                      "perSeriesAligner": "ALIGN_MEAN",
+                      "crossSeriesReducer": "REDUCE_MAX",
+                      "groupByFields": [
+                        "metric.label.\"timestamp\"",
+                        "metric.label.\"alert_id\"",
+                        "metric.label.\"backendService\"",
+                        "metric.label.\"confidence\"",
+                        "metric.label.\"attackSize\"",
+                        "metric.label.\"rule_expression\"",
+                        "metric.label.\"autodeploy\"",
+                        "metric.label.\"ruleStatus\""
+                      ]
+                    }
+                  },
+                  "unitOverride": "",
+                  "outputFullDuration": true
+                },
+                "tableTemplate": "",
+                "minAlignmentPeriod": "60s"
+              }
+            ],
+            "metricVisualization": "NUMBER",
+            "columnSettings": [
+              {
+                "column": "timestamp",
+                "visible": true
+              },
+              {
+                "column": "alert_id",
+                "visible": true
+              },
+              {
+                "column": "backendService",
+                "visible": true
+              },
+              {
+                "column": "confidence",
+                "visible": true
+              },
+              {
+                "column": "attackSize",
+                "visible": true
+              },
+              {
+                "column": "autodeploy",
+                "visible": true
+              },
+              {
+                "column": "ruleStatus",
+                "visible": true
+              },
+              {
+                "column": "value",
+                "visible": false
+              }
+            ],
+            "opsAnalyticsSettings": {
+              "maxRows": "0",
+              "showFilterBar": false,
+              "pageSize": "0"
+            },
+            "displayColumnType": false
+          },
+          "title": "Adaptive Protection Alerts",
+          "id": ""
+        }
+      },
+      {
+        "xPos": 24,
+        "yPos": 139,
+        "width": 24,
+        "height": 16,
+        "widget": {
+          "xyChart": {
+            "dataSets": [
+              {
+                "timeSeriesQuery": {
+                  "timeSeriesFilter": {
+                    "filter": "metric.type=\"logging.googleapis.com/user/threat-intelligence-logs\"",
+                    "aggregation": {
+                      "alignmentPeriod": "60s",
+                      "perSeriesAligner": "ALIGN_RATE",
+                      "crossSeriesReducer": "REDUCE_SUM",
+                      "groupByFields": [
+                        "metric.label.\"ti_feed_name\""
+                      ]
+                    }
+                  },
+                  "unitOverride": "",
+                  "outputFullDuration": false
+                },
+                "plotType": "LINE",
+                "legendTemplate": "",
+                "minAlignmentPeriod": "60s",
+                "targetAxis": "Y1",
+                "dimensions": [],
+                "measures": [],
+                "breakdowns": []
+              }
+            ],
+            "thresholds": [],
+            "yAxis": {
+              "label": "",
+              "scale": "LINEAR"
+            },
+            "chartOptions": {
+              "mode": "COLOR",
+              "showLegend": false,
+              "displayHorizontal": false
+            }
+          },
+          "title": "Threat Intelligence",
+          "id": ""
+        }
+      },
+      {
+        "yPos": 169,
+        "width": 23,
+        "height": 14,
+        "widget": {
+          "title": "Total Ingress (Bytes)",
+          "xyChart": {
+            "dataSets": [
+              {
+                "timeSeriesQuery": {
+                  "timeSeriesFilter": {
+                    "filter": "metric.type=\"networksecurity.googleapis.com/dos/ingress_bytes_count\" resource.type=\"networksecurity.googleapis.com/ProtectedEndpoint\"",
+                    "aggregation": {
+                      "alignmentPeriod": "60s",
+                      "perSeriesAligner": "ALIGN_RATE",
+                      "crossSeriesReducer": "REDUCE_SUM",
+                      "groupByFields": []
+                    }
+                  },
+                  "unitOverride": "",
+                  "outputFullDuration": false
+                },
+                "plotType": "LINE",
+                "legendTemplate": "",
+                "minAlignmentPeriod": "60s",
+                "targetAxis": "Y1",
+                "dimensions": [],
+                "measures": [],
+                "breakdowns": []
+              }
+            ],
+            "thresholds": [],
+            "yAxis": {
+              "label": "",
+              "scale": "LINEAR"
+            },
+            "chartOptions": {
+              "mode": "COLOR",
+              "showLegend": false,
+              "displayHorizontal": false
+            }
+          },
+          "id": ""
+        }
+      },
+      {
+        "yPos": 183,
+        "width": 23,
+        "height": 14,
+        "widget": {
+          "title": "Ingress (Bytes) Dropped",
+          "xyChart": {
+            "dataSets": [
+              {
+                "timeSeriesQuery": {
+                  "timeSeriesFilter": {
+                    "filter": "metric.type=\"networksecurity.googleapis.com/dos/ingress_bytes_count\" resource.type=\"networksecurity.googleapis.com/ProtectedEndpoint\" metric.label.\"drop_status\"=\"dropped\"",
+                    "aggregation": {
+                      "alignmentPeriod": "60s",
+                      "perSeriesAligner": "ALIGN_RATE",
+                      "crossSeriesReducer": "REDUCE_SUM",
+                      "groupByFields": [
+                        "resource.label.\"location\""
+                      ]
+                    }
+                  },
+                  "unitOverride": "",
+                  "outputFullDuration": false
+                },
+                "plotType": "LINE",
+                "legendTemplate": "",
+                "minAlignmentPeriod": "60s",
+                "targetAxis": "Y1",
+                "dimensions": [],
+                "measures": [],
+                "breakdowns": []
+              }
+            ],
+            "thresholds": [],
+            "yAxis": {
+              "label": "",
+              "scale": "LINEAR"
+            },
+            "chartOptions": {
+              "mode": "COLOR",
+              "showLegend": false,
+              "displayHorizontal": false
+            }
+          },
+          "id": ""
+        }
+      },
+      {
+        "yPos": 139,
+        "width": 48,
+        "height": 16,
+        "widget": {
+          "title": "Adaptive Protection",
+          "collapsibleGroup": {
+            "collapsed": false
+          },
+          "id": ""
+        }
+      },
+      {
+        "yPos": 155,
+        "width": 48,
+        "height": 42,
+        "widget": {
+          "title": "DDoS Visibility - L3/L4 DDoS attack mitigation on GLB",
+          "collapsibleGroup": {
+            "collapsed": true
+          },
+          "id": ""
+        }
+      },
+      {
+        "xPos": 23,
+        "yPos": 183,
+        "width": 23,
+        "height": 14,
+        "widget": {
+          "title": "Ingress (Packets) Dropped",
+          "xyChart": {
+            "dataSets": [
+              {
+                "timeSeriesQuery": {
+                  "timeSeriesFilter": {
+                    "filter": "metric.type=\"networksecurity.googleapis.com/dos/ingress_packets_count\" resource.type=\"networksecurity.googleapis.com/ProtectedEndpoint\" metric.label.\"drop_status\"=\"dropped\"",
+                    "aggregation": {
+                      "alignmentPeriod": "60s",
+                      "perSeriesAligner": "ALIGN_RATE",
+                      "crossSeriesReducer": "REDUCE_SUM",
+                      "groupByFields": [
+                        "resource.label.\"location\""
+                      ]
+                    }
+                  },
+                  "unitOverride": "",
+                  "outputFullDuration": false
+                },
+                "plotType": "LINE",
+                "legendTemplate": "",
+                "minAlignmentPeriod": "60s",
+                "targetAxis": "Y1",
+                "dimensions": [],
+                "measures": [],
+                "breakdowns": []
+              }
+            ],
+            "thresholds": [],
+            "yAxis": {
+              "label": "",
+              "scale": "LINEAR"
+            },
+            "chartOptions": {
+              "mode": "COLOR",
+              "showLegend": false,
+              "displayHorizontal": false
+            }
+          },
+          "id": ""
+        }
+      },
+      {
+        "xPos": 23,
+        "yPos": 169,
+        "width": 23,
+        "height": 14,
+        "widget": {
+          "title": "Total Ingress (Packets)",
+          "xyChart": {
+            "dataSets": [
+              {
+                "timeSeriesQuery": {
+                  "timeSeriesFilter": {
+                    "filter": "metric.type=\"networksecurity.googleapis.com/dos/ingress_packets_count\" resource.type=\"networksecurity.googleapis.com/ProtectedEndpoint\"",
+                    "aggregation": {
+                      "alignmentPeriod": "60s",
+                      "perSeriesAligner": "ALIGN_RATE",
+                      "crossSeriesReducer": "REDUCE_SUM",
+                      "groupByFields": []
+                    }
+                  },
+                  "unitOverride": "",
+                  "outputFullDuration": false
+                },
+                "plotType": "LINE",
+                "legendTemplate": "",
+                "minAlignmentPeriod": "60s",
+                "targetAxis": "Y1",
+                "dimensions": [],
+                "measures": [],
+                "breakdowns": []
+              }
+            ],
+            "thresholds": [],
+            "yAxis": {
+              "label": "",
+              "scale": "LINEAR"
+            },
+            "chartOptions": {
+              "mode": "COLOR",
+              "showLegend": false,
+              "displayHorizontal": false
+            }
+          },
+          "id": ""
+        }
+      },
+      {
+        "yPos": 197,
+        "width": 48,
+        "height": 24,
+        "widget": {
+          "title": "CDN Metrics",
+          "collapsibleGroup": {
+            "collapsed": true
+          },
+          "id": ""
+        }
+      },
+      {
+        "xPos": 1,
+        "yPos": 197,
+        "width": 15,
+        "height": 8,
+        "widget": {
+          "title": "CDN Client Latency",
+          "scorecard": {
+            "timeSeriesQuery": {
+              "timeSeriesQueryLanguage": "fetch https_lb_rule\n| metric 'loadbalancing.googleapis.com/https/frontend_tcp_rtt'\n| group_by 1m,\n    [value_frontend_tcp_rtt_aggregate: aggregate(value.frontend_tcp_rtt)]\n| every 1m\n| group_by [],\n    [value_frontend_tcp_rtt_aggregate_mean:\n       mean(value_frontend_tcp_rtt_aggregate)]",
+              "unitOverride": "",
+              "outputFullDuration": false
+            },
+            "sparkChartView": {
+              "sparkChartType": "SPARK_LINE"
+            },
+            "thresholds": [],
+            "dimensions": [],
+            "measures": []
+          },
+          "id": ""
+        }
+      },
+      {
+        "xPos": 16,
+        "yPos": 197,
+        "width": 16,
+        "height": 8,
+        "widget": {
+          "title": "Total Latency",
+          "scorecard": {
+            "timeSeriesQuery": {
+              "timeSeriesFilter": {
+                "filter": "metric.type=\"loadbalancing.googleapis.com/https/total_latencies\" resource.type=\"https_lb_rule\"",
+                "aggregation": {
+                  "alignmentPeriod": "60s",
+                  "perSeriesAligner": "ALIGN_SUM",
+                  "crossSeriesReducer": "REDUCE_MEAN",
+                  "groupByFields": []
+                }
+              },
+              "unitOverride": "",
+              "outputFullDuration": false
+            },
+            "sparkChartView": {
+              "sparkChartType": "SPARK_LINE"
+            },
+            "thresholds": [],
+            "dimensions": [],
+            "measures": []
+          },
+          "id": ""
+        }
+      },
+      {
+        "xPos": 16,
+        "yPos": 213,
+        "width": 16,
+        "height": 8,
+        "widget": {
+          "title": "Edge Request Count",
+          "scorecard": {
+            "timeSeriesQuery": {
+              "timeSeriesFilter": {
+                "filter": "metric.type=\"loadbalancing.googleapis.com/https/request_count\" resource.type=\"https_lb_rule\" metric.label.\"cache_result\"=\"HIT\"",
+                "aggregation": {
+                  "alignmentPeriod": "60s",
+                  "perSeriesAligner": "ALIGN_SUM",
+                  "crossSeriesReducer": "REDUCE_SUM",
+                  "groupByFields": []
+                }
+              },
+              "unitOverride": "",
+              "outputFullDuration": false
+            },
+            "sparkChartView": {
+              "sparkChartType": "SPARK_LINE"
+            },
+            "thresholds": [],
+            "dimensions": [],
+            "measures": []
+          },
+          "id": ""
+        }
+      },
+      {
+        "xPos": 32,
+        "yPos": 197,
+        "width": 16,
+        "height": 8,
+        "widget": {
+          "title": "Origin Response count",
+          "scorecard": {
+            "timeSeriesQuery": {
+              "timeSeriesFilter": {
+                "filter": "metric.type=\"loadbalancing.googleapis.com/https/backend_request_count\" resource.type=\"https_lb_rule\" metric.label.\"cache_result\"=\"MISS\"",
+                "aggregation": {
+                  "alignmentPeriod": "60s",
+                  "perSeriesAligner": "ALIGN_SUM",
+                  "crossSeriesReducer": "REDUCE_SUM",
+                  "groupByFields": []
+                }
+              },
+              "unitOverride": "",
+              "outputFullDuration": false
+            },
+            "sparkChartView": {
+              "sparkChartType": "SPARK_LINE"
+            },
+            "thresholds": [],
+            "dimensions": [],
+            "measures": []
+          },
+          "id": ""
+        }
+      },
+      {
+        "xPos": 16,
+        "yPos": 205,
+        "width": 16,
+        "height": 8,
+        "widget": {
+          "title": "Cache Hit Ratio",
+          "scorecard": {
+            "timeSeriesQuery": {
+              "timeSeriesQueryLanguage": "       fetch https_lb_rule::loadbalancing.googleapis.com/https/request_count\n| { filter metric.cache_result = 'HIT' |\n filter resource.target_proxy_name = 'cdn-demo-lb-target-proxy'\n  ; ident }\n| group_by [resource.target_proxy_name == 'cdn-demo-lb-target-proxy'] \n| ratio\n| group_by [], (sum(val()*100))",
+              "unitOverride": "",
+              "outputFullDuration": false
+            },
+            "sparkChartView": {
+              "sparkChartType": "SPARK_LINE"
+            },
+            "thresholds": [],
+            "dimensions": [],
+            "measures": []
+          },
+          "id": ""
+        }
+      },
+      {
+        "xPos": 32,
+        "yPos": 213,
+        "width": 16,
+        "height": 8,
+        "widget": {
+          "title": "Total Response Bytes",
+          "scorecard": {
+            "timeSeriesQuery": {
+              "timeSeriesQueryLanguage": "fetch https_lb_rule\n| metric 'loadbalancing.googleapis.com/https/response_bytes_count'\n| group_by 1m,\n    [value_response_bytes_count_aggregate:\n       aggregate(value.response_bytes_count)]\n| every 1m\n| group_by [],\n    [value_response_bytes_count_aggregate_aggregate:\n       aggregate(value_response_bytes_count_aggregate)]",
+              "unitOverride": "",
+              "outputFullDuration": false
+            },
+            "sparkChartView": {
+              "sparkChartType": "SPARK_LINE"
+            },
+            "thresholds": [],
+            "dimensions": [],
+            "measures": []
+          },
+          "id": ""
+        }
+      },
+      {
+        "xPos": 1,
+        "yPos": 205,
+        "width": 15,
+        "height": 8,
+        "widget": {
+          "title": "Cache Egress",
+          "scorecard": {
+            "timeSeriesQuery": {
+              "timeSeriesQueryLanguage": "fetch https_lb_rule\n| metric 'loadbalancing.googleapis.com/https/response_bytes_count'\n| filter (metric.cache_result == 'HIT')\n| group_by 1m,\n    [value_response_bytes_count_aggregate:\n       aggregate(value.response_bytes_count)]\n| every 1m\n| group_by [],\n    [value_response_bytes_count_aggregate_aggregate:\n       aggregate(value_response_bytes_count_aggregate)]",
+              "unitOverride": "",
+              "outputFullDuration": false
+            },
+            "sparkChartView": {
+              "sparkChartType": "SPARK_LINE"
+            },
+            "thresholds": [],
+            "dimensions": [],
+            "measures": []
+          },
+          "id": ""
+        }
+      },
+      {
+        "xPos": 1,
+        "yPos": 213,
+        "width": 15,
+        "height": 8,
+        "widget": {
+          "title": "Origin Egress",
+          "scorecard": {
+            "timeSeriesQuery": {
+              "timeSeriesFilter": {
+                "filter": "metric.type=\"loadbalancing.googleapis.com/https/response_bytes_count\" resource.type=\"https_lb_rule\" metric.label.\"cache_result\"=\"MISS\"",
+                "aggregation": {
+                  "alignmentPeriod": "60s",
+                  "perSeriesAligner": "ALIGN_SUM",
+                  "crossSeriesReducer": "REDUCE_SUM",
+                  "groupByFields": []
+                }
+              },
+              "unitOverride": "",
+              "outputFullDuration": false
+            },
+            "sparkChartView": {
+              "sparkChartType": "SPARK_LINE"
+            },
+            "thresholds": [],
+            "dimensions": [],
+            "measures": []
+          },
+          "id": ""
+        }
+      },
+      {
+        "xPos": 32,
+        "yPos": 205,
+        "width": 16,
+        "height": 8,
+        "widget": {
+          "title": "Number of Requests by Day",
+          "scorecard": {
+            "timeSeriesQuery": {
+              "timeSeriesFilter": {
+                "filter": "metric.type=\"loadbalancing.googleapis.com/https/request_count\" resource.type=\"https_lb_rule\"",
+                "aggregation": {
+                  "alignmentPeriod": "86400s",
+                  "perSeriesAligner": "ALIGN_RATE",
+                  "groupByFields": []
+                },
+                "secondaryAggregation": {
+                  "alignmentPeriod": "60s",
+                  "perSeriesAligner": "ALIGN_SUM",
+                  "crossSeriesReducer": "REDUCE_COUNT",
+                  "groupByFields": []
+                }
+              },
+              "unitOverride": "",
+              "outputFullDuration": false
+            },
+            "sparkChartView": {
+              "sparkChartType": "SPARK_LINE"
+            },
+            "thresholds": [],
+            "dimensions": [],
+            "measures": []
+          },
+          "id": ""
+        }
+      },
+      {
+        "yPos": 155,
+        "width": 25,
+        "height": 14,
+        "widget": {
+          "title": "DDoS Visibility Data",
+          "timeSeriesTable": {
+            "dataSets": [
+              {
+                "timeSeriesQuery": {
+                  "timeSeriesFilter": {
+                    "filter": "metric.type=\"logging.googleapis.com/user/ddos_attack_started\"",
+                    "aggregation": {
+                      "alignmentPeriod": "60s",
+                      "perSeriesAligner": "ALIGN_RATE",
+                      "crossSeriesReducer": "REDUCE_MAX",
+                      "groupByFields": [
+                        "metric.label.\"total_volume_bps\"",
+                        "metric.label.\"total_volume_pps\"",
+                        "metric.label.\"mitigation_incident_name\"",
+                        "metric.label.\"target_vip\"",
+                        "metric.label.\"attack_volume_bps\"",
+                        "metric.label.\"attack_duration\"",
+                        "metric.label.\"attack_volume_pps\""
+                      ]
+                    }
+                  },
+                  "unitOverride": "",
+                  "outputFullDuration": false
+                },
+                "tableTemplate": "",
+                "minAlignmentPeriod": "60s"
+              }
+            ],
+            "metricVisualization": "NUMBER",
+            "columnSettings": [
+              {
+                "column": "policy_name",
+                "visible": true
+              },
+              {
+                "column": "backendService",
+                "visible": true
+              },
+              {
+                "column": "alert_id",
+                "visible": true
+              },
+              {
+                "column": "timestamp",
+                "visible": true
+              },
+              {
+                "column": "attackSize",
+                "visible": true
+              },
+              {
+                "column": "confidence",
+                "visible": true
+              },
+              {
+                "column": "autodeploy",
+                "visible": true
+              },
+              {
+                "column": "ruleStatus",
+                "visible": true
+              },
+              {
+                "column": "value",
+                "visible": false
+              }
+            ],
+            "opsAnalyticsSettings": {
+              "maxRows": "0",
+              "showFilterBar": false,
+              "pageSize": "0"
+            },
+            "displayColumnType": false
+          },
+          "id": ""
+        }
+      }
+    ]
+  },
+  "dashboardFilters": [],
+  "labels": {}
+}
