@@ -23,6 +23,10 @@
         "description": "Cloud Armor Action"
       },
       {
+        "key": "outcome",
+        "description": "request is ACCEPT or DENY"
+      },
+      {
         "key": "CloudArmorRuleTriggered",
         "description": "Rule number that triggered"
       },
@@ -51,7 +55,8 @@
     "URL": "EXTRACT(httpRequest.requestUrl)",
     "user_agent": "EXTRACT(httpRequest.userAgent)",
     "client_ip": "EXTRACT(jsonPayload.remoteIp)",
-    "denied_by_cloud_armor": "EXTRACT(jsonPayload.enforcedSecurityPolicy.outcome)",
+    "denied_by_cloud_armor": "EXTRACT(jsonPayload.enforcedSecurityPolicy.configuredAction)",
+    "outcome": "EXTRACT(jsonPayload.enforcedSecurityPolicy.outcome)",
     "CloudArmorRuleTriggered": "EXTRACT(jsonPayload.enforcedSecurityPolicy.priority)",
     "referer": "EXTRACT(httpRequest.referer)"
   },
