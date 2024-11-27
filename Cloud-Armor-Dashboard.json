@@ -187,7 +187,7 @@
             "dataSets": [
               {
                 "timeSeriesQuery": {
-                  "prometheusQuery": "topk(100, count by (CloudArmorRuleTriggered)(count_over_time(logging_googleapis_com:user_cloud_armor_feed[${__interval}])))\n#This query may not fully reflect the original configuration.",
+                  "prometheusQuery": "topk(100, count by (deny_reason,CloudArmorRuleTriggered)(count_over_time(logging_googleapis_com:user_cloud_armor_feed[${__interval}])))\n#This query may not fully reflect the original configuration.",
                   "unitOverride": "",
                   "outputFullDuration": true
                 },
@@ -196,6 +196,20 @@
               }
             ],
             "metricVisualization": "BAR",
+            "columnSettings": [
+              {
+                "column": "CloudArmorRuleTriggered",
+                "visible": true
+              },
+              {
+                "column": "deny_reason",
+                "visible": true
+              },
+              {
+                "column": "value",
+                "visible": true
+              }
+            ],
             "opsAnalyticsSettings": {
               "maxRows": "0",
               "showFilterBar": false,
@@ -819,7 +833,7 @@
         }
       },
       {
-        "yPos": 139,
+        "yPos": 156,
         "width": 24,
         "height": 16,
         "widget": {
@@ -899,55 +913,64 @@
         }
       },
       {
-        "xPos": 24,
         "yPos": 139,
-        "width": 24,
-        "height": 16,
+        "width": 48,
+        "height": 33,
         "widget": {
-          "xyChart": {
-            "dataSets": [
-              {
-                "timeSeriesQuery": {
-                  "timeSeriesFilter": {
-                    "filter": "metric.type=\"logging.googleapis.com/user/threat-intelligence-logs\"",
-                    "aggregation": {
-                      "alignmentPeriod": "60s",
-                      "perSeriesAligner": "ALIGN_RATE",
-                      "crossSeriesReducer": "REDUCE_SUM",
-                      "groupByFields": [
-                        "metric.label.\"ti_feed_name\""
-                      ]
-                    }
-                  },
-                  "unitOverride": "",
-                  "outputFullDuration": false
-                },
-                "plotType": "LINE",
-                "legendTemplate": "",
-                "minAlignmentPeriod": "60s",
-                "targetAxis": "Y1",
-                "dimensions": [],
-                "measures": [],
-                "breakdowns": []
-              }
-            ],
-            "thresholds": [],
-            "yAxis": {
-              "label": "",
-              "scale": "LINEAR"
-            },
-            "chartOptions": {
-              "mode": "COLOR",
-              "showLegend": false,
-              "displayHorizontal": false
-            }
+          "title": "Cloud Armor Enterprise Features",
+          "collapsibleGroup": {
+            "collapsed": false
           },
-          "title": "Threat Intelligence",
           "id": ""
         }
       },
       {
-        "yPos": 169,
+        "xPos": 1,
+        "yPos": 139,
+        "width": 41,
+        "height": 17,
+        "widget": {
+          "timeSeriesTable": {
+            "dataSets": [
+              {
+                "timeSeriesQuery": {
+                  "timeSeriesFilter": {
+                    "filter": "metric.type=\"logging.googleapis.com/user/cloud_armor_feed\" metric.label.\"CloudArmorRuleTriggered\"=\"10000\"",
+                    "aggregation": {
+                      "alignmentPeriod": "3600s",
+                      "perSeriesAligner": "ALIGN_COUNT",
+                      "crossSeriesReducer": "REDUCE_SUM",
+                      "groupByFields": [
+                        "metric.label.\"URL\"",
+                        "metric.label.\"client_ip\"",
+                        "metric.label.\"CloudArmorRuleTriggered\"",
+                        "metric.label.\"denied_by_cloud_armor\"",
+                        "metric.label.\"deny_reason\"",
+                        "metric.label.\"outcome\""
+                      ]
+                    }
+                  },
+                  "unitOverride": "",
+                  "outputFullDuration": true
+                },
+                "tableTemplate": "",
+                "minAlignmentPeriod": "3600s"
+              }
+            ],
+            "metricVisualization": "NUMBER",
+            "opsAnalyticsSettings": {
+              "maxRows": "0",
+              "showFilterBar": false,
+              "pageSize": "0"
+            },
+            "displayColumnType": false
+          },
+          "title": "Threat Intelligence (aggregate by hour)",
+          "id": ""
+        }
+      },
+      {
+        "yPos": 186,
         "width": 23,
         "height": 14,
         "widget": {
@@ -992,7 +1015,7 @@
         }
       },
       {
-        "yPos": 183,
+        "yPos": 200,
         "width": 23,
         "height": 14,
         "widget": {
@@ -1039,23 +1062,11 @@
         }
       },
       {
-        "yPos": 139,
-        "width": 48,
-        "height": 16,
-        "widget": {
-          "title": "Adaptive Protection",
-          "collapsibleGroup": {
-            "collapsed": false
-          },
-          "id": ""
-        }
-      },
-      {
-        "yPos": 155,
+        "yPos": 172,
         "width": 48,
         "height": 42,
         "widget": {
-          "title": "DDoS Visibility - L3/L4 DDoS attack mitigation on GLB",
+          "title": "DDoS Visibility - L3/L4 DDoS attack (Need Cloud Armor Enterprise License)",
           "collapsibleGroup": {
             "collapsed": true
           },
@@ -1064,7 +1075,7 @@
       },
       {
         "xPos": 23,
-        "yPos": 183,
+        "yPos": 200,
         "width": 23,
         "height": 14,
         "widget": {
@@ -1112,7 +1123,7 @@
       },
       {
         "xPos": 23,
-        "yPos": 169,
+        "yPos": 186,
         "width": 23,
         "height": 14,
         "widget": {
@@ -1157,7 +1168,7 @@
         }
       },
       {
-        "yPos": 197,
+        "yPos": 214,
         "width": 48,
         "height": 24,
         "widget": {
@@ -1170,7 +1181,7 @@
       },
       {
         "xPos": 1,
-        "yPos": 197,
+        "yPos": 214,
         "width": 15,
         "height": 8,
         "widget": {
@@ -1193,7 +1204,7 @@
       },
       {
         "xPos": 16,
-        "yPos": 197,
+        "yPos": 214,
         "width": 16,
         "height": 8,
         "widget": {
@@ -1224,7 +1235,7 @@
       },
       {
         "xPos": 16,
-        "yPos": 213,
+        "yPos": 230,
         "width": 16,
         "height": 8,
         "widget": {
@@ -1255,7 +1266,7 @@
       },
       {
         "xPos": 32,
-        "yPos": 197,
+        "yPos": 214,
         "width": 16,
         "height": 8,
         "widget": {
@@ -1286,7 +1297,7 @@
       },
       {
         "xPos": 16,
-        "yPos": 205,
+        "yPos": 222,
         "width": 16,
         "height": 8,
         "widget": {
@@ -1309,7 +1320,7 @@
       },
       {
         "xPos": 32,
-        "yPos": 213,
+        "yPos": 230,
         "width": 16,
         "height": 8,
         "widget": {
@@ -1332,7 +1343,7 @@
       },
       {
         "xPos": 1,
-        "yPos": 205,
+        "yPos": 222,
         "width": 15,
         "height": 8,
         "widget": {
@@ -1355,7 +1366,7 @@
       },
       {
         "xPos": 1,
-        "yPos": 213,
+        "yPos": 230,
         "width": 15,
         "height": 8,
         "widget": {
@@ -1386,7 +1397,7 @@
       },
       {
         "xPos": 32,
-        "yPos": 205,
+        "yPos": 222,
         "width": 16,
         "height": 8,
         "widget": {
@@ -1421,7 +1432,7 @@
         }
       },
       {
-        "yPos": 155,
+        "yPos": 172,
         "width": 25,
         "height": 14,
         "widget": {
