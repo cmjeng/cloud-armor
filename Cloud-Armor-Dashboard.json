@@ -930,15 +930,16 @@
         "width": 41,
         "height": 17,
         "widget": {
+          "title": "Threat Intelligence (aggregate by hour)",
           "timeSeriesTable": {
             "dataSets": [
               {
+                "minAlignmentPeriod": "3600s",
                 "timeSeriesQuery": {
+                  "outputFullDuration": true,
                   "timeSeriesFilter": {
-                    "filter": "metric.type=\"logging.googleapis.com/user/cloud_armor_feed\" metric.label.\"CloudArmorRuleTriggered\"=\"10000\"",
                     "aggregation": {
                       "alignmentPeriod": "3600s",
-                      "perSeriesAligner": "ALIGN_COUNT",
                       "crossSeriesReducer": "REDUCE_SUM",
                       "groupByFields": [
                         "metric.label.\"URL\"",
@@ -947,26 +948,22 @@
                         "metric.label.\"denied_by_cloud_armor\"",
                         "metric.label.\"deny_reason\"",
                         "metric.label.\"outcome\""
-                      ]
-                    }
-                  },
-                  "unitOverride": "",
-                  "outputFullDuration": true
-                },
-                "tableTemplate": "",
-                "minAlignmentPeriod": "3600s"
+                      ],
+                      "perSeriesAligner": "ALIGN_COUNT"
+                    },
+                    "filter": "metric.type=\"logging.googleapis.com/user/cloud_armor_feed\" metric.label.\"CloudArmorRuleTriggered\"=monitoring.regex.full_match(\"10000|10001\")"
+                  }
+                }
               }
             ],
+            "displayColumnType": false,
             "metricVisualization": "NUMBER",
             "opsAnalyticsSettings": {
               "maxRows": "0",
-              "showFilterBar": false,
-              "pageSize": "0"
-            },
-            "displayColumnType": false
-          },
-          "title": "Threat Intelligence (aggregate by hour)",
-          "id": ""
+              "pageSize": "0",
+              "showFilterBar": false
+            }
+          }
         }
       },
       {
